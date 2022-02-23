@@ -4,11 +4,13 @@ import java.util.Stack;
 class Graph {
     int count;
     int size;
+    int vertex;
 
     ArrayList<ArrayList<ListNode>> listGraph;
 
-    Graph(int count, int size) {
+    Graph(int count, int size, int vertexStart) {
         this.count = count;
+        this.vertex = vertexStart;
         this.size = size;
         listGraph = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
@@ -32,7 +34,7 @@ class Graph {
         stack.push(v);
     }
 
-    void longestPath(int start) {
+    int[] longestPath(int start) {
         Stack<Integer> stack = new Stack<>();
         int[] dist = new int[count];
         boolean[] visited = new boolean[count];
@@ -55,33 +57,13 @@ class Graph {
                 }
             }
         }
-
-        int i = 0;
-        int maxDist=0;
-
-        for (int k = 0; k < size; k++)
-            for (int m = 0; m < size; m++) {
-
-                System.out.println();
-                if (dist[i] == Integer.MIN_VALUE)
-                    System.out.print("INF ");
-                else if (i != 0) {
-                    dist[i] -= dist[0];
-                    System.out.printf("initialVertex->[%d][%d]=%d ", k, m, dist[i++]);
-                } else
-                    System.out.printf("initialVertex->[%d][%d]=%d ", k, m, dist[i++]);
-                if(dist[i-1]>maxDist)
-                    maxDist=dist[i-1];
-            }
-
-        System.out.printf("\nLongest path tree from vertex 'initial Vertex' =%d ", maxDist);
+        dist[0] = vertex;
+        return dist;
     }
 
     static class ListNode {
         int vertex;
         int weight;
-
-
         ListNode(int vertex, int weight) {
             this.vertex = vertex;
             this.weight = weight;
@@ -90,7 +72,6 @@ class Graph {
         int getVertex() {
             return vertex;
         }
-
         int getWeight() {
             return weight;
         }
